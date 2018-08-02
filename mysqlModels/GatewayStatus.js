@@ -1,5 +1,5 @@
 'use strict';
-const consts = require('../../lib/constants');
+const consts = require('../constants');
 const Sequelize = require('sequelize');
 const Crud = require('./Crud');
 

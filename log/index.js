@@ -2,7 +2,6 @@ const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
 const transport = new transports.Console();
 const moment = require('moment');
-const utils = require('../../utils');
 const loggerDict = {};
 
 const cusFormat = printf(function (info) {

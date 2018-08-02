@@ -1,4 +1,3 @@
-const utils = require('../../utils');
 
 class BasicError extends Error {
   constructor(message) {

@@ -1,7 +1,7 @@
 'use strict';
 
 const bluebird = require('bluebird');
-const consts = require('../lib/constants');
+const consts = require('../constants');
 const crypto = require('crypto');
 
 const _this = new class {

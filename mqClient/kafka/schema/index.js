@@ -39,8 +39,8 @@ function Schema(options) {
   _.defaultsDeep(this.options, defaultOptions);
 
   const ajv = new Ajv({ allErrors: true, extendRefs: true });
-  const schema = require(path.join('../../../../', this.options.schemaPath.messages));
-  const common = require(path.join('../../../../', this.options.schemaPath.common));
+  const schema = require(path.join('../../../../../', this.options.schemaPath.messages));
+  const common = require(path.join('../../../../../', this.options.schemaPath.common));
   ajv.addSchema(common);
 
   this.ajv = ajv;

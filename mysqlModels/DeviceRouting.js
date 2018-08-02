@@ -1,10 +1,10 @@
 'use strict';
 
 const BluebirdPromise = require('bluebird');
-const consts = require('../../lib/constants');
+const consts = require('../constants');
 const Sequelize = require('sequelize');
 const Crud = require('./Crud');
-const utils = require('../../utils');
+const utils = require('../utils');
 
 const deviceRoutingDef = function (sequelize) {
   return sequelize.define('DeviceRouting', {
