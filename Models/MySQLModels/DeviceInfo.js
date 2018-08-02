@@ -1,18 +1,10 @@
 'use strict';
-const consts = require('../constants');
+const {consts} = require('./modules');
 const Sequelize = require('sequelize');
 const Crud = require('./Crud');
 
 const deviceInfoDef = function (sequelize) {
   return sequelize.define('DeviceInfo', {
-    did: {
-      type: Sequelize.CHAR(consts.DID_LEN),
-      allowNull: true,
-    },
-    productKey: {
-      type: Sequelize.CHAR(consts.PK_LEN),
-      allowNull: true,
-    },
     DevEUI: {
       type: Sequelize.CHAR(consts.DEVEUI_LEN * 2),
       primaryKey: true,

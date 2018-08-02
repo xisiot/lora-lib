@@ -1,6 +1,5 @@
 'use strict';
-const utils = require('../utils');
-const consts = require('../constants');
+const {utils, consts} = require('./modules');
 const BluebirdPromise = require('bluebird');
 
 const Crud = {

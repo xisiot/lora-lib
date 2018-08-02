@@ -1,10 +1,9 @@
 'use strict';
 
-const BluebirdPromise = require('bluebird');
-const consts = require('../constants');
+const bluebird = require('bluebird');
+const {consts, utils} = require('./modules');
 const Sequelize = require('sequelize');
 const Crud = require('./Crud');
-const utils = require('../utils');
 
 const deviceRoutingDef = function (sequelize) {
   return sequelize.define('DeviceRouting', {
@@ -89,10 +88,10 @@ DeviceRouting.prototype.getTxpkInfo = function (devAddr, DeviceInfo, DeviceConfi
     ],
   }).then(function (res) {
     if (!res) {
-      return BluebirdPromise.reject(new Error('No txpk config in DeviceRouting.'));
+      return bluebird.reject(new Error('No txpk config in DeviceRouting.'));
     }
 
-    return BluebirdPromise.resolve(utils.objHex2Buf(res.get({ plain: true })));
+    return bluebird.resolve(utils.objHex2Buf(res.get({ plain: true })));
   });
 };
 
