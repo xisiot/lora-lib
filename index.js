@@ -5,4 +5,5 @@ module.exports = {
   MQClient: require('./mqClient'),
   Models: require('./Models'),
   utils: require('./utils'),
+  dbClient: require('./dbClient'),
 };
