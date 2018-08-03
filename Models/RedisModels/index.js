@@ -6,4 +6,5 @@ module.exports = {
   DownlinkCmdQueue: require('./DownlinkCmdQueue'),
   MacCmdQueue: require('./MacCmdQueue'),
   MessageQueue: require('./MessageQueue'),
+  GatewayInfo: require('./GatewayInfo'),
 };
