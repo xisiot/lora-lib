@@ -212,19 +212,4 @@ MqClient.prototype.errHandler = function (error) {
 
 };
 
-MqClient.prototype.sendUplinkToShadow = function (shadowTopic, shadowPayload, params) {
-  const _this = this;
-  let topic = _this.options.topics.pubToShadow; // TODO IoT-pub-${nsid}
-  let message = {
-    from: {
-      did: params.did,
-    },
-    topic: shadowTopic,
-    cid: 1, // TODO cid :_this.options.nsid,
-    payload: shadowPayload,
-  };
-
-  return this.publish(topic, message);
-};
-
 module.exports = MqClient;
