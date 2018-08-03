@@ -1,7 +1,12 @@
 const modules = {};
+const Log = require('../log');
+const log = new Log();
 
 const dbErrorHandler = function (error) {
-  this.log(error);
+  log.error({
+    label: 'dbClient Error',
+    error: error,
+  });
 };
 
 try {
@@ -19,7 +24,6 @@ try {
   };
   modules.createRedisClient = createRedisClient;
 } catch (error) {
-  dbErrorHandler(error);
 }
 
 try {
@@ -35,7 +39,6 @@ try {
 
   modules.createSequelizeClient = createSequelizeClient;
 } catch (error) {
-  dbErrorHandler(error);
 }
 
 try {
@@ -47,12 +50,13 @@ try {
 
     const db = mongoose.connection;
 
+    /* compile schema */
+    db.on('error', dbErrorHandler);
     return db;
   };
 
   modules.createMongoClient = createMongoClient;
 } catch (error) {
-  dbErrorHandler(error);
 }
 
 module.exports = modules;
