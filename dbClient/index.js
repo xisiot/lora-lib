@@ -1,11 +1,15 @@
 const modules = {};
 
+const dbErrorHandler = function (error) {
+  this.log(error);
+};
+
 try {
   const Redis = require('ioredis');
   const createRedisClient = function (config) {
     const _ioredis = config.cluster ?
-        new Redis.Cluster(config.options) :
-        new Redis(config.options[0]);
+      new Redis.Cluster(config.options) :
+      new Redis(config.options[0]);
 
     _ioredis.once('connect', function (err) {
       _ioredis.client('setname', `${process.pid}.db`);
@@ -15,6 +19,7 @@ try {
   };
   modules.createRedisClient = createRedisClient;
 } catch (error) {
+  dbErrorHandler(error);
 }
 
 try {
@@ -30,6 +35,24 @@ try {
 
   modules.createSequelizeClient = createSequelizeClient;
 } catch (error) {
+  dbErrorHandler(error);
+}
+
+try {
+  const mongoose = require('mongoose');
+  const createMongoClient = function (config) {
+
+    const url = `mongodb://${config.host}:${config.port}/${config.db}`;
+    mongoose.connect(url, { useNewUrlParser: true });
+
+    const db = mongoose.connection;
+
+    return db;
+  };
+
+  modules.createMongoClient = createMongoClient;
+} catch (error) {
+  dbErrorHandler(error);
 }
 
 module.exports = modules;
