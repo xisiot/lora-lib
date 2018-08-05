@@ -23,7 +23,7 @@ MessageQueue.prototype.checkQueueLength = function (mq) {
   });
 };
 
-MessageQueue.prototype.produce = function (mq, src, protoBufUnit, productKey) {
+MessageQueue.prototype.produce = function (mq, src, protoBufUnit, AppEUI) {
 
   let _this = this;
 
@@ -31,7 +31,7 @@ MessageQueue.prototype.produce = function (mq, src, protoBufUnit, productKey) {
     return BluebirdPromise.reject(
       new Error(JSON.stringify({
         message: 'MessageQueue Input src should be an object && Contains keyword \'data\'',
-        productKey: productKey,
+        AppEUI: AppEUI,
         scr: src,
       })));
   }
@@ -45,12 +45,12 @@ MessageQueue.prototype.produce = function (mq, src, protoBufUnit, productKey) {
       des.aggregation++;
     }
 
-    return protoBufUnit.JSONToPBUnit(des.data, productKey)
+    return protoBufUnit.JSONToPBUnit(des.data, AppEUI)
       .then(function (res) {
         if (!Buffer.isBuffer(res) && typeof res === 'object') {
           return BluebirdPromise.reject(new Error(JSON.stringify({
             message: 'Revice Object Data and No PB Config',
-            productKey: productKey,
+            AppEUI: AppEUI,
             data: des.data,
           })));
         }
