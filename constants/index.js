@@ -607,8 +607,8 @@ module.exports = new function () {
   this.SPREADFACTOR_MIN = 7;
 
   this.MONGO_USERCOLLECTION_PREFIX = "lora_user_";
-  this.MONGO_JOINMSGCOLLECTION = "lora_joinMsg";
-  this.MONGO_APPMSGCOLLECTION_PREFIX = "lora_productKey_";
+  this.MONGO_JOINMSGCOLLECTION = "lora_join";
+  this.MONGO_APPMSGCOLLECTION_PREFIX = "lora_appeui_";
   this.MONGO_SAVEDMSG_TYPE = {
     uplink_joinReq:'UPLINK_JOINREQ',
     uplink_msg:'UPLINK_MSG',
