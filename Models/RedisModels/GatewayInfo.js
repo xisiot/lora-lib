@@ -6,11 +6,13 @@ function GatewayInfo(redis) {
   this._ioredis = redis;
   this.hashTable = 'GatewayInfo';
   this.hashKey = 'gatewayId';
-  this.integerList = [
-    'pullPort',
-    'pushPort',
-    'version',
-  ];
+  this.transformList = {
+    integerList: [
+      'pullPort',
+      'pushPort',
+      'version'
+    ]
+  };
 }
 
 GatewayInfo.prototype = Object.create(Crud);

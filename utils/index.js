@@ -199,20 +199,33 @@ const _this = new class {
     return bluebird.resolve(this.objHex2Buf(objHex, transformList));
   }
 
-  objStr2Int(objStr, transformList) {
+  objStrTransform(objStr, transformList) {
     let objStrCopy = Object.assign({}, objStr);
-    transformList.forEach((element) => {
-      if (objStrCopy[element]) {
-        objStrCopy[element] = parseInt(objStrCopy[element]);
-      }
-
+    Object.keys(transformList).forEach((key) => {
+      transformList[key].forEach((element) => {
+        if (objStrCopy[element]) {
+          switch (key) {
+            case 'integerList':
+              objStrCopy[element] = parseInt(objStrCopy[element]);
+              break;
+            case 'floatList':
+              objStrCopy[element] = parseFloat(objStrCopy[element]);
+              break;
+            case 'booleanList':
+              objStrCopy[element] = !(objStrCopy[element] === '0');
+              break;
+            default:
+              break;
+          }
+        }
+      })
     });
 
     return objStrCopy;
   }
 
-  objStr2IntPromise(objStr, transformList) {
-    return bluebird.resolve(this.objStr2Int(objStr, transformList));
+  objStrTransformPromise(objStr, transformList) {
+    return bluebird.resolve(this.objStrTransform(objStr, transformList));
   }
 
   buf2str(buf, times, encoding) {

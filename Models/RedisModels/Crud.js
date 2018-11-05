@@ -34,7 +34,7 @@ const Crud = {
         return utils.objHex2BufPromise(data);
       })
       .then((data) => {
-        return utils.objStr2IntPromise(data, this.integerList);
+        return utils.objStrTransformPromise(data, this.transformList);
       });
   },
 

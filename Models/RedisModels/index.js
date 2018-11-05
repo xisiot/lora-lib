@@ -7,4 +7,5 @@ module.exports = {
   MacCmdQueue: require('./MacCmdQueue'),
   MessageQueue: require('./MessageQueue'),
   GatewayInfo: require('./GatewayInfo'),
+  DeviceInfo: require('./DeviceInfo'),
 };
