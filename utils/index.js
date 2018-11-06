@@ -212,7 +212,7 @@ const _this = new class {
               objStrCopy[element] = parseFloat(objStrCopy[element]);
               break;
             case 'booleanList':
-              objStrCopy[element] = !(objStrCopy[element] === '0');
+              objStrCopy[element] = objStrCopy[element] == 'true';
               break;
             default:
               break;

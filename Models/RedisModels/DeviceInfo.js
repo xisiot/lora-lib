@@ -21,7 +21,9 @@ function DeviceInfo(redis) {
       'freq'
     ],
     booleanList: [
-      'ADR'
+      'ADR',
+      'imme',
+      'ipol'
     ]
   };
 }
@@ -43,6 +45,18 @@ DeviceInfo.prototype.update = function (DevAddr, fields) {
   };
 
   return this.updateFields(query, fields);
+};
+
+DeviceInfo.prototype.increaseAfcntdown = function (DevAddr) {
+  const query = {
+    DevAddr
+  };
+
+  return this.readItem(query, ['AFCntDown'])
+    .then((res) => {
+      res.AFCntDown += 1;
+      return this.updateFields(query, res);
+    });
 };
 
 module.exports = DeviceInfo;
