@@ -23,7 +23,7 @@ module.exports = new function () {
   this.RXDELAY_BITOFFSET = 0;
   this.RXDELAY_BITLEN = 4;
   this.RXDELAY_LEN = 1;
-  
+
   this.NWKSKEY_LEN = 16;
   this.APPSKEY_LEN = 16;
   this.DIRECTION_LEN = 1;
@@ -114,8 +114,8 @@ module.exports = new function () {
   this.DOWNLINK_DELAY = 300;
   this.DEDUPLICATION_DURATION = 200;
   this.COLLECTKEYTEMP_PREFIX = "lora:ns:rx:collect:"
-	this.COLLECTLOCKKEYTEMP_PREFIX = "lora:ns:rx:collect:lock:"
-  this.MACCOMMANDPORT = Buffer.from('00','hex');
+  this.COLLECTLOCKKEYTEMP_PREFIX = "lora:ns:rx:collect:lock:"
+  this.MACCOMMANDPORT = Buffer.from('00', 'hex');
 
   this.MAX_FCNT_DIFF = 50;
   /* data rate parameters */
@@ -434,10 +434,20 @@ module.exports = new function () {
   this.DUTYCYCLE_CID = 0x04;
   this.DUTYCYCLEANS_LEN = 0;
   this.DUTYCYCLEREQ_LEN = 1;
+  this.DUTYCYCLEREQ = {
+    MAXCYCLE_BASE: 1,
+    DUTYCYCLEPL_LEN: 1,
+  }
 
   this.RXPARAMSETUP_CID = 0x05;
   this.RXPARAMSETUPANS_LEN = 1;
   this.RXPARAMSETUPREQ_LEN = 4;
+  this.RXPARAMSETUPREQ = {
+    FREQUENCY_LEN: 3,
+    DLSETTINGS_LEN: 1,
+    RX2DATARATE_BASE: 1,
+    RX1DROFFSET_BASE: 16, // DLSettings = RX1DRoffset * RX1DROFFSET_BASE + RX2DataRate * RX2DATARATE_BASE
+  }
 
   this.DEVSTATUS_CID = 0x06;
   this.DEVSTATUSANS_LEN = 2;
@@ -447,18 +457,38 @@ module.exports = new function () {
   this.NEWCHANNEL_CID = 0x07;
   this.NEWCHANNELANS_LEN = 1;
   this.NEWCHANNELREQ_LEN = 5;
+  this.NEWCHANNELREQ = {
+    CHINDEX_LEN: 1,
+    FREQ_LEN: 3,
+    DRRANGE_LEN: 1,
+    MAXDR_BASE: 16,
+    MINDR_BASE: 1, // DrRange = MaxDR * MAXDR_BASE + MinDR * MINDR_BASE
+  }
 
   this.RXTIMINGSETUP_CID = 0x08;
   this.RXTIMINGSETUPANS_LEN = 0;
   this.RXTIMINGSETUPREQ_LEN = 1;
+  this.RXTIMINGSETUPREQ = {
+    SETTINGS_LEN: 1,
+  }
 
   this.TXPARAMSETUP_CID = 0x09;
   this.TXPARAMSETUPANS_LEN = 0;
   this.TXPARAMSETUPREQ_LEN = 1;
+  this.TXPARAMSETUPREQ = {
+    EIRP_DWELLTIME_LEN: 1,
+    DOWNLINKDWELLTIME_BASE: 32,
+    UPLINKDWELLTIME_BASE: 16,
+    MAXEIRP_BASE: 1 // EIRP_DwellTime = DownlinkDwellTime * DOWNLINKDWELLTIME_BASE + UplinkDwellTime * UPLINKDWELLTIME_BASE + MaxEIRP * MAXEIRP_BASE
+  }
 
   this.DLCHANNEL_CID = 0x0A;
   this.DLCHANNELANS_LEN = 1;
   this.DLCHANNELREQ_LEN = 4;
+  this.DLCHANNELREQ = {
+    CHINDEX_LEN: 1,
+    FREQ_LEN: 3,
+  }
 
   this.REKEY_CID = 0x0B;
   this.REKEYIND_LEN = 1;
@@ -467,17 +497,36 @@ module.exports = new function () {
   this.ADRPARAMSETUP_CID = 0x0C;
   this.ADRPARAMSETUPANS_LEN = 0;
   this.ADRPARAMSETUPREQ_LEN = 1;
+  this.ADRPARAMSETUPREQ = {
+    ADRPARAM_LEN: 1,
+    LIMIT_EXP_BASE: 16,
+    DELAY_EXP_BASE: 1, // ADRparam = Limit_exp * LIMIT_EXP_BASE + Delay_exp * DELAY_EXP_BASE
+  }
 
   this.DEVICETIME_CID = 0x0D;
   this.DEVICETIMEREQ_LEN = 0;
   this.DEVICETIMEANS_LEN = 5;
+  this.DEVICETIMEANS = {
+    FRACTIONALSEC_LEN: 1,
+    SECONDS_LEN: 4,
+  }
 
   this.FORCEREJOIN_CID = 0x0E;
   this.FORCEREJOINREQ_LEN = 2;
+  this.FORCEREJOINREQ = {
+    PERIOD_BASE: 1024,
+    MAX_RETRIES_BASE: 256,
+    REJOINTYPE_BASE: 16,
+    DR_BASE: 1 // ForcerRejoinReq = Period * PERIOD_BASE + Max_Retries * MAX_RETRIES_BASE + RejoinType * REJOINTYPE_BASE + DR * DR_BASE
+  }
 
   this.REJOINPARAMSETUP_CID = 0x0F;
   this.REJOINPARAMSETUPANS_LEN = 1;
   this.REJOINPARAMSETUPREQ_LEN = 1;
+  this.REJOINPARAMSETUPREQ = {
+    MAXTIMEN_BASE: 16,
+    MAXCOUNTN: 1, // RejoinParamSetupReq = MaxTimeN * MAXTIMEN_BASE + MacCountN * MAXCOUNTN_BASE
+  }
 
   this.MACCMD_DOWNLINK_LIST = {
     [this.RESET_CID]: this.RESETCONF_LEN,
@@ -513,7 +562,7 @@ module.exports = new function () {
     [this.DEVICETIME_CID]: this.DEVICETIMEREQ_LEN,
     [this.REJOINPARAMSETUP_CID]: this.REJOINPARAMSETUPANS_LEN,
   };
-  
+
   // Required Demodulator SNR (/dB) of LoRa modem
   this.SF_REQUIREDSNR = {
     ['12']: -20,
@@ -542,7 +591,7 @@ module.exports = new function () {
   }
 
   this.MAX_FRMPAYLOAD_SIZE_REPEATER = {
-    433:{
+    433: {
       SF12BW125: 51,
       SF11BW125: 51,
       SF10BW125: 51,
@@ -559,7 +608,7 @@ module.exports = new function () {
       SF8BW125: 222,
       SF7BW125: 222,
       SF8BW500: 222,
-      
+
       SF12BW500: 33,
       SF11BW500: 109,
       SF10BW500: 222,
@@ -569,7 +618,7 @@ module.exports = new function () {
     },
   }
   this.MAX_FRMPAYLOAD_SIZE_NOREPEATER = {
-    433:{
+    433: {
       SF12BW125: 51,
       SF11BW125: 51,
       SF10BW125: 51,
@@ -586,7 +635,7 @@ module.exports = new function () {
       SF8BW125: 242,
       SF7BW125: 242,
       SF8BW500: 242,
-      
+
       SF12BW500: 53,
       SF11BW500: 129,
       SF10BW500: 242,
@@ -610,9 +659,9 @@ module.exports = new function () {
   this.MONGO_JOINMSGCOLLECTION = "lora_join";
   this.MONGO_APPMSGCOLLECTION_PREFIX = "lora_appeui_";
   this.MONGO_SAVEDMSG_TYPE = {
-    uplink_joinReq:'UPLINK_JOINREQ',
-    uplink_msg:'UPLINK_MSG',
-    uplink_gatewayStat:'GATEWAYSTAT',
+    uplink_joinReq: 'UPLINK_JOINREQ',
+    uplink_msg: 'UPLINK_MSG',
+    uplink_gatewayStat: 'GATEWAYSTAT',
     downlink_joinAns: 'DONWLINK_JOINANS',
     downlink_msg: 'DOWNLINK_MSG',
   }
