@@ -5,7 +5,6 @@ module.exports = new function () {
   this.DEVADDR_LEN = 4;
   this.GATEWAYID_LEN = 8;
   this.APPKEY_LEN = 16;
-  this.GW_ID_LEN = this.DEVEUI_LEN;
   this.DEVNONCE_LEN = 2;
   this.APPNONCE_LEN = 3;
   this.JOINREQ_BASIC_LENGTH = this.APPEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
@@ -275,7 +274,7 @@ module.exports = new function () {
 
   //UDP PUSH_DATA
   this.UDP_GW_ID_OFFSET = this.UDP_IDENTIFIER_OFFSET + this.UDP_IDENTIFIER_LEN;
-  this.UDP_JSON_OBJ_OFFSET = this.UDP_GW_ID_OFFSET + this.GW_ID_LEN;
+  this.UDP_JSON_OBJ_OFFSET = this.UDP_GW_ID_OFFSET + this.GATEWAYID_LEN;
 
   this.UDP_DOWNLINK_BASIC_LEN = this.UDP_VERSION_LEN + this.UDP_TOKEN_LEN + this.UDP_IDENTIFIER_LEN;
 
@@ -284,7 +283,7 @@ module.exports = new function () {
   //UDP PULL_DATA same as PUSH_DATA
 
   //UDP PULL_ACK
-  this.UDP_PULL_ACK_LEN = this.UDP_DOWNLINK_BASIC_LEN + this.GW_ID_LEN;
+  this.UDP_PULL_ACK_LEN = this.UDP_DOWNLINK_BASIC_LEN + this.GATEWAYID_LEN;
 
   //UDP PULL_RESP
   this.UDP_PULL_RESP_PAYLOAD_OFFSET = this.UDP_GW_ID_OFFSET;
