@@ -664,4 +664,33 @@ module.exports = new function () {
     downlink_joinAns: 'DONWLINK_JOINANS',
     downlink_msg: 'DOWNLINK_MSG',
   }
+
+  //Cache attributes
+  this.DEVICEINFO_CACHE_ATTRIBUTES = [
+    'AppEUI',
+    'NwkSKey',
+    'AppSKey',
+    'FCntUp',
+    'NFCntDown',
+    'AFCntDown',
+    'ProtocolVersion'
+  ];
+  this.DEVICECONFIG_CACHE_ATTRIBUTES = [
+    'frequencyPlan',
+    'ADR',
+    'RX1DRoffset',
+    'RX1Delay'
+  ];
+  this.DEVICEROUTING_CACHE_ATTRIBUTES = [
+    'gatewayId',
+    'imme',
+    'tmst',
+    'freq',
+    'rfch',
+    'powe',
+    'datr',
+    'modu',
+    'codr',
+    'ipol'
+  ];
 };
