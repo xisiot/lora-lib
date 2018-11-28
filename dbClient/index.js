@@ -1,13 +1,4 @@
 const modules = {};
-const Log = require('../log');
-const log = new Log();
-
-const dbErrorHandler = function (error) {
-  log.error({
-    label: 'dbClient Error',
-    error: error,
-  });
-};
 
 try {
   const Redis = require('ioredis');
@@ -50,8 +41,6 @@ try {
 
     const db = mongoose.connection;
 
-    /* compile schema */
-    db.on('error', dbErrorHandler);
     return db;
   };
 
