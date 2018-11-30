@@ -63,16 +63,23 @@ DownlinkCmdQueue.prototype.produce = function (mq, src) {
     });
 };
 
+DownlinkCmdQueue.prototype.delete = function (mq) {
+  let _this = this;
+  return _this._ioredis.rpop(mq).then(function (res) {
+    return BluebirdPromise.resolve(!res ? res : JSON.parse(res));
+  });
+}
+
 DownlinkCmdQueue.prototype.trim = function (mq, start, end) {
   let _this = this;
   return _this._ioredis.ltrim(mq, start, end)
-  .then((res) => {
-    if (res == 'OK') {
-      return BluebirdPromise.resolve();
-    }
+    .then((res) => {
+      if (res == 'OK') {
+        return BluebirdPromise.resolve();
+      }
 
-    return BluebirdPromise.reject(new Error('DownlinkCmdQueue trim failed'));
-  });
+      return BluebirdPromise.reject(new Error('DownlinkCmdQueue trim failed'));
+    });
 }
 
 module.exports = DownlinkCmdQueue;

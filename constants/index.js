@@ -405,6 +405,10 @@ module.exports = new function () {
   this.RESET_CID = 0x01;
   this.RESETIND_LEN = 1;
   this.RESETCONF_LEN = 1;
+  this.RESETIND = {
+    MINOR_START: 0,
+    MINOR_LEN: 4,
+  }
 
   this.LINKCHECK_CID = 0x02;
   this.LINKCHECKREQ_LEN = 0;
@@ -429,6 +433,14 @@ module.exports = new function () {
     TXPOWER_DEFAULT: 15, // keep txpower of device unchanged
     NBTRANS_DEFAULT: 0, // keep nbtrans unchanged
   };
+  this.LINKADRANS = {
+    CHANNELMASKACK_START: 0,
+    CHANNELMASKACK_LEN: 1,
+    DATARATEACK_START: 1,
+    DATARATEACK_LEN: 1,
+    POWERACK_START: 2,
+    POWERACK_LEN: 1,
+  }
 
   this.DUTYCYCLE_CID = 0x04;
   this.DUTYCYCLEANS_LEN = 0;
@@ -447,11 +459,25 @@ module.exports = new function () {
     RX2DATARATE_BASE: 1,
     RX1DROFFSET_BASE: 16, // DLSettings = RX1DRoffset * RX1DROFFSET_BASE + RX2DataRate * RX2DATARATE_BASE
   }
+  this.RXPARAMSETUPANS = {
+    CHANNELACK_START: 0,
+    CHANNELACK_LEN: 1,
+    RX2DATARATEACK_START: 1,
+    RX2DATARATEACK_LEN: 1,
+    RX1DROFFSETACK_START: 2,
+    RX1DROFFSETACK_LEN: 1,
+  }
 
   this.DEVSTATUS_CID = 0x06;
   this.DEVSTATUSANS_LEN = 2;
   this.BATTERY_LEN = 1;
   this.DEVSTATUSREQ_LEN = 0;
+  this.DEVSTATUSANS = {
+    BATTERY_START: 0,
+    BATTERY_LEN: 1,
+    MARGIN_START: 1,
+    MARGIN_LEN: 1,
+  }
 
   this.NEWCHANNEL_CID = 0x07;
   this.NEWCHANNELANS_LEN = 1;
@@ -462,6 +488,12 @@ module.exports = new function () {
     DRRANGE_LEN: 1,
     MAXDR_BASE: 16,
     MINDR_BASE: 1, // DrRange = MaxDR * MAXDR_BASE + MinDR * MINDR_BASE
+  }
+  this.NEWCHANNELANS = {
+    CHANNELFREQUENCY_START: 0,
+    CHANNEKFREQUENCY_LEN: 1,
+    DATARATERANGE_START: 1,
+    DATARATERANGE_LEN: 1,
   }
 
   this.RXTIMINGSETUP_CID = 0x08;
@@ -488,10 +520,20 @@ module.exports = new function () {
     CHINDEX_LEN: 1,
     FREQ_LEN: 3,
   }
+  this.DLCHANNELANS = {
+    CHANNELFREQUENCY_START: 0,
+    CHANNELFREQUENCY_LEN: 1,
+    UPLINKFREQUENCY_START: 1,
+    UPLINKFREQUENCY_LEN: 1,
+  }
 
   this.REKEY_CID = 0x0B;
   this.REKEYIND_LEN = 1;
   this.REKEYCONF_LEN = 1;
+  this.REKEYIND = {
+    MINOR_START: 0,
+    MINOR_LEN: 4,
+  }
 
   this.ADRPARAMSETUP_CID = 0x0C;
   this.ADRPARAMSETUPANS_LEN = 0;
@@ -524,7 +566,11 @@ module.exports = new function () {
   this.REJOINPARAMSETUPREQ_LEN = 1;
   this.REJOINPARAMSETUPREQ = {
     MAXTIMEN_BASE: 16,
-    MAXCOUNTN: 1, // RejoinParamSetupReq = MaxTimeN * MAXTIMEN_BASE + MacCountN * MAXCOUNTN_BASE
+    MAXCOUNTN_BASE: 1, // RejoinParamSetupReq = MaxTimeN * MAXTIMEN_BASE + MacCountN * MAXCOUNTN_BASE
+  }
+  this.REJOINPARAMSETUPANS = {
+    TIMEOK_START: 0,
+    TIMEOK_LEN: 1,
   }
 
   this.MACCMD_DOWNLINK_LIST = {
