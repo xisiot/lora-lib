@@ -19,7 +19,7 @@ const Crud = {
     };
 
     return this._model
-      .find(whereOpts)
+      .findOne(whereOpts)
       .then(handleDatabaseRes);
   },
 
