@@ -66,4 +66,22 @@ GatewayInfo.prototype.queryGatewayAddress = function (gatewayId) {
   return this.readItem(query, fields);
 };
 
+GatewayInfo.prototype.readUserID = function (gatewayId) {
+  const query = {
+    gatewayId
+  };
+
+  const fields = ['userID'];
+
+  return this.readItem(query, fields);
+};
+
+GatewayInfo.prototype.updateUserID = function (gatewayId, fields) {
+  const query = {
+    gatewayId
+  };
+
+  return this.updateFields(query, fields);
+};
+
 module.exports = GatewayInfo;
