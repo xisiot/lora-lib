@@ -358,6 +358,12 @@ const _this = new class {
     let cid = this.bufferSlice(obj_buffer, consts.CID_OFFEST, consts.CID_OFFEST + consts.CID_LEN, false);
     let output;
     if (cid.readUInt8(0) === 0x01) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let Version = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.RESETCONF_LEN, false);
       output = {
@@ -366,6 +372,12 @@ const _this = new class {
         }
       }
     } else if (cid.readUInt8(0) === 0x02) {
+      if (string.length !== 6) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 2 bytes payload'
+        };
+      }
       let Margin = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.LINKCHECKANS.MARGIN_LEN, false);
       let GwCnt = this.bufferSlice(obj_buffer, consts.CID_LEN + consts.LINKCHECKANS.MARGIN_LEN,
@@ -377,6 +389,12 @@ const _this = new class {
         }
       }
     } else if (cid.readUInt8(0) === 0x03) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 4 bytes payload'
+        };
+      }
       let TXPower = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN, false);
       let ChMask = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN,
@@ -391,6 +409,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x04) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let DutyCyclePL = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.DUTYCYCLEREQ_LEN, false);
       output = {
@@ -399,6 +423,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x05) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 4 bytes payload'
+        };
+      }
       let DLSettings = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.RXPARAMSETUPREQ.DLSETTINGS_LEN, false);
       let Frequency = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.RXPARAMSETUPREQ.DLSETTINGS_LEN,
@@ -410,11 +440,23 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x06) {
+      if (string.length !== 2) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 0 bytes payload'
+        };
+      }
       output = {
         [Buffer.from([consts.DEVSTATUS_CID], 'hex').toString('hex')]: {
         }
       };
     } else if (cid.readUInt8(0) === 0x07) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 4 bytes payload'
+        };
+      }
       let ChIndex = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN, false);
       let Freq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN,
@@ -429,6 +471,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x08) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let Settings = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.RXTIMINGSETUPREQ_LEN, false);
       output = {
@@ -437,6 +485,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x09) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let DwellTime = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.TXPARAMSETUPREQ_LEN, false);
       output = {
@@ -445,6 +499,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x0a) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 4 bytes payload'
+        };
+      }
       let ChIndex = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.DLCHANNELREQ.CHINDEX_LEN, false);
       let Freq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.DLCHANNELREQ.CHINDEX_LEN,
@@ -456,6 +516,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x0b) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let Version = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.REKEYCONF_LEN, false);
       output = {
@@ -464,6 +530,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x0c) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let ADRparam = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.ADRPARAMSETUPREQ_LEN, false);
       output = {
@@ -472,6 +544,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x0d) {
+      if (string.length !== 12) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 5 bytes payload'
+        };
+      }
       let Seconds = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.DEVICETIMEANS.SECONDS_LEN, false);
       let FractionalSec = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.DEVICETIMEANS.SECONDS_LEN,
@@ -483,6 +561,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x0e) {
+      if (string.length !== 6) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 2 bytes payload'
+        };
+      }
       let ForcerRejoinReq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.FORCEREJOINREQ_LEN, false);
       output = {
@@ -491,6 +575,12 @@ const _this = new class {
         }
       };
     } else if (cid.readUInt8(0) === 0x0f) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2106,
+          message: 'outputObj should have 1 bytes payload'
+        };
+      }
       let RejoinParamSetupReq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
         consts.CID_OFFEST + consts.CID_LEN + consts.REJOINPARAMSETUPREQ_LEN, false);
       output = {
@@ -499,7 +589,7 @@ const _this = new class {
         }
       };
     } else {
-      let output = {
+      output = {
       }
     }
     return output;
