@@ -360,8 +360,8 @@ const _this = new class {
     if (cid.readUInt8(0) === 0x01) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let Version = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -374,8 +374,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x02) {
       if (string.length !== 6) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 2 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 2 bytes payload'
         };
       }
       let Margin = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -391,8 +391,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x03) {
       if (string.length !== 10) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 4 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
         };
       }
       let TXPower = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -411,8 +411,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x04) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let DutyCyclePL = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -425,8 +425,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x05) {
       if (string.length !== 10) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 4 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
         };
       }
       let DLSettings = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -442,8 +442,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x06) {
       if (string.length !== 2) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 0 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 0 bytes payload'
         };
       }
       output = {
@@ -453,8 +453,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x07) {
       if (string.length !== 10) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 4 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
         };
       }
       let ChIndex = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -473,8 +473,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x08) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let Settings = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -487,8 +487,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x09) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let DwellTime = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -501,8 +501,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x0a) {
       if (string.length !== 10) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 4 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
         };
       }
       let ChIndex = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -518,8 +518,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x0b) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let Version = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -532,8 +532,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x0c) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let ADRparam = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -546,8 +546,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x0d) {
       if (string.length !== 12) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 5 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 5 bytes payload'
         };
       }
       let Seconds = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -563,8 +563,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x0e) {
       if (string.length !== 6) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 2 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 2 bytes payload'
         };
       }
       let ForcerRejoinReq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
@@ -577,8 +577,8 @@ const _this = new class {
     } else if (cid.readUInt8(0) === 0x0f) {
       if (string.length !== 4) {
         return output = {
-          code: 2106,
-          message: 'outputObj should have 1 bytes payload'
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
         };
       }
       let RejoinParamSetupReq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
