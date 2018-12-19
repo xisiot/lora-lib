@@ -353,6 +353,247 @@ const _this = new class {
     return Buffer.from(str, 'hex');
   }
 
+  maccommandIssuer(string) {
+    let obj_buffer = Buffer.from(string, 'hex');
+    let cid = this.bufferSlice(obj_buffer, consts.CID_OFFEST, consts.CID_OFFEST + consts.CID_LEN, false);
+    let output;
+    if (cid.readUInt8(0) === 0x01) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let Version = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.RESETCONF_LEN, false);
+      output = {
+        [Buffer.from([consts.RESET_CID], 'hex').toString('hex')]: {
+          Version: Version,
+        }
+      }
+    } else if (cid.readUInt8(0) === 0x02) {
+      if (string.length !== 6) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 2 bytes payload'
+        };
+      }
+      let Margin = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.LINKCHECKANS.MARGIN_LEN, false);
+      let GwCnt = this.bufferSlice(obj_buffer, consts.CID_LEN + consts.LINKCHECKANS.MARGIN_LEN,
+        consts.CID_LEN + consts.LINKCHECKANS.MARGIN_LEN + consts.LINKCHECKANS.GWCNT_LEN, false);
+      output = {
+        [Buffer.from([consts.LINKCHECK_CID], 'hex').toString('hex')]: {
+          Margin: Margin,
+          GwCnt: GwCnt,
+        }
+      }
+    } else if (cid.readUInt8(0) === 0x03) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
+        };
+      }
+      let TXPower = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN, false);
+      let ChMask = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN + consts.LINKADRREQ.CHMASK_LEN, false);
+      let Redundancy = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN + consts.LINKADRREQ.CHMASK_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.LINKADRREQ.DATARATE_TXPOWER_LEN + consts.LINKADRREQ.CHMASK_LEN + consts.LINKADRREQ.REDUNDANCY_LEN, false);
+      output = {
+        [Buffer.from([consts.LINKADR_CID], 'hex').toString('hex')]: {
+          TXPower: TXPower,
+          ChMask: ChMask,
+          Redundancy: Redundancy,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x04) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let DutyCyclePL = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.DUTYCYCLEREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.DUTYCYCLE_CID], 'hex').toString('hex')]: {
+          DutyCyclePL: DutyCyclePL,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x05) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
+        };
+      }
+      let DLSettings = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.RXPARAMSETUPREQ.DLSETTINGS_LEN, false);
+      let Frequency = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.RXPARAMSETUPREQ.DLSETTINGS_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.RXPARAMSETUPREQ.DLSETTINGS_LEN + consts.RXPARAMSETUPREQ.FREQUENCY_LEN, false);
+      output = {
+        [Buffer.from([consts.RXPARAMSETUP_CID], 'hex').toString('hex')]: {
+          DLSettings: DLSettings,
+          Frequency: Frequency,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x06) {
+      if (string.length !== 2) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 0 bytes payload'
+        };
+      }
+      output = {
+        [Buffer.from([consts.DEVSTATUS_CID], 'hex').toString('hex')]: {
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x07) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
+        };
+      }
+      let ChIndex = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN, false);
+      let Freq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN + consts.NEWCHANNELREQ.FREQ_LEN, false);
+      let DrRange = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN + consts.NEWCHANNELREQ.FREQ_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.NEWCHANNELREQ.CHINDEX_LEN + consts.NEWCHANNELREQ.FREQ_LEN + consts.NEWCHANNELREQ.DRRANGE_LEN, false);
+      output = {
+        [Buffer.from([consts.NEWCHANNEL_CID], 'hex').toString('hex')]: {
+          ChIndex: ChIndex,
+          Freq: Freq,
+          DrRange: DrRange,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x08) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let Settings = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.RXTIMINGSETUPREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.RXTIMINGSETUP_CID], 'hex').toString('hex')]: {
+          Settings: Settings,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x09) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let DwellTime = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.TXPARAMSETUPREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.TXPARAMSETUP_CID], 'hex').toString('hex')]: {
+          DwellTime: DwellTime,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x0a) {
+      if (string.length !== 10) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 4 bytes payload'
+        };
+      }
+      let ChIndex = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.DLCHANNELREQ.CHINDEX_LEN, false);
+      let Freq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.DLCHANNELREQ.CHINDEX_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.DLCHANNELREQ.CHINDEX_LEN + consts.DLCHANNELREQ.FREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.DLCHANNEL_CID], 'hex').toString('hex')]: {
+          ChIndex: ChIndex,
+          Freq: Freq,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x0b) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let Version = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.REKEYCONF_LEN, false);
+      output = {
+        [Buffer.from([consts.REKEY_CID], 'hex').toString('hex')]: {
+          Version: Version,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x0c) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let ADRparam = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.ADRPARAMSETUPREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.ADRPARAMSETUP_CID], 'hex').toString('hex')]: {
+          ADRparam: ADRparam,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x0d) {
+      if (string.length !== 12) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 5 bytes payload'
+        };
+      }
+      let Seconds = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.DEVICETIMEANS.SECONDS_LEN, false);
+      let FractionalSec = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN + consts.DEVICETIMEANS.SECONDS_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.DEVICETIMEANS.SECONDS_LEN + consts.DEVICETIMEANS.FRACTIONALSEC_LEN, false);
+      output = {
+        [Buffer.from([consts.DEVICETIME_CID], 'hex').toString('hex')]: {
+          Seconds: Seconds,
+          FractionalSec: FractionalSec,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x0e) {
+      if (string.length !== 6) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 2 bytes payload'
+        };
+      }
+      let ForcerRejoinReq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.FORCEREJOINREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.FORCEREJOIN_CID], 'hex').toString('hex')]: {
+          ForcerRejoinReq: ForcerRejoinReq,
+        }
+      };
+    } else if (cid.readUInt8(0) === 0x0f) {
+      if (string.length !== 4) {
+        return output = {
+          code: 2108,
+          message: 'MACCommand should have 1 bytes payload'
+        };
+      }
+      let RejoinParamSetupReq = this.bufferSlice(obj_buffer, consts.CID_OFFEST + consts.CID_LEN,
+        consts.CID_OFFEST + consts.CID_LEN + consts.REJOINPARAMSETUPREQ_LEN, false);
+      output = {
+        [Buffer.from([consts.REJOINPARAMSETUP_CID], 'hex').toString('hex')]: {
+          RejoinParamSetupReq: RejoinParamSetupReq,
+        }
+      };
+    } else {
+      output = {
+      }
+    }
+    return output;
+  }
 }();
 
 module.exports = _this;
