@@ -713,6 +713,7 @@ module.exports = new function () {
 
   //Cache attributes
   this.DEVICEINFO_CACHE_ATTRIBUTES = [
+    'AppKey',
     'AppEUI',
     'NwkSKey',
     'AppSKey',
