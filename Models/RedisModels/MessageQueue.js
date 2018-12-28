@@ -69,4 +69,15 @@ MessageQueue.prototype.produce = function (mq, src, protoBufUnit, AppEUI) {
   });
 };
 
+MessageQueue.prototype.produceByHTTP = function (mq, downlinkString) {
+  let _this = this;
+  _this.consume(mq)
+    .then(() => {
+      let writeObj;
+      writeObj.pbdata = downlinkString;
+      writeObj.data = downlinkString;
+      writeObj.aggregation = 0;
+      return _this._ioredis.rpush(mq, JSON.stringify(writeObj))
+    })
+}
 module.exports = MessageQueue;
