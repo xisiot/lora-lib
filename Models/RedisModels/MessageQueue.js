@@ -71,9 +71,13 @@ MessageQueue.prototype.produce = function (mq, src, protoBufUnit, AppEUI) {
 
 MessageQueue.prototype.produceByHTTP = function (mq, downlinkString) {
   let _this = this;
-  _this.consume(mq)
+  return _this.consume(mq)
     .then(() => {
-      let writeObj;
+      const writeObj = {
+        pbdata: null,
+        data: null,
+        aggregation: null,
+      };
       writeObj.pbdata = downlinkString;
       writeObj.data = downlinkString;
       writeObj.aggregation = 0;
