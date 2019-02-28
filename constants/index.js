@@ -1,12 +1,15 @@
 module.exports = new function () {
+  this.JOINEUI_LEN = 8;
   this.APPEUI_LEN = 8;
   this.DEVEUI_LEN = 8;
+  this.REJOINTYPE_LEN = 1;
   this.GWEUI_LEN = this.DEVEUI_LEN;
   this.DEVADDR_LEN = 4;
   this.GATEWAYID_LEN = 8;
   this.APPKEY_LEN = 16;
   this.DEVNONCE_LEN = 2;
   this.APPNONCE_LEN = 3;
+  this.JOINNONCE_LEN = 3;
   this.JOINREQ_BASIC_LENGTH = this.APPEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
   this.NETID_LEN = 3;
   this.NWKID_LEN = 1;
@@ -31,10 +34,10 @@ module.exports = new function () {
     'ABP',
   ];
   this.BUF_LIST = [
-    'AppEUI',
+    'JoinEUI',
     'DevEUI',
     'AppKey',
-    'AppNonce',
+    'JoinNonce',
     'DevNonce',
     'AppSKey',
     'NwkSKey',
@@ -236,6 +239,7 @@ module.exports = new function () {
   // this.JS_MSG_TYPE_LIST = Object.values(this.JS_MSG_TYPE);
   this.JS_MSG_TYPE_LIST = [
     this.JOIN_REQ,
+    this.REJOIN_REQ,
   ];
 
   //UDP message version
@@ -332,11 +336,23 @@ module.exports = new function () {
 
   //For join request
   this.JOINEUI_OFFSET = 0;
-  this.JOINEUI_LEN = 8;
   this.DEVEUI_OFFSET = this.JOINEUI_OFFSET + this.JOINEUI_LEN;
   this.DEVNONCE_OFFSET = this.DEVEUI_OFFSET + this.DEVEUI_LEN;
   this.JOINREQ_BASIC_LENGTH = this.APPEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN
-
+  
+  //For rejoin request1
+  this.REJOINTYPE_OFFSET = 0;
+  this.REJOINTYPE_LEN = 1;
+  this.REJOINEUI_OFFSET = this.REJOINTYPE_OFFSET + this.REJOINTYPE_LEN;
+  this.REJOINDEVEUI_OFFSET = this.REJOINEUI_OFFSET + this.JOINEUI_LEN;
+  this.RJCOUNT0_OFFSET = this.REJOINDEVEUI_OFFSET + this.RJCOUNT0_LEN;
+  this.REJOINREQ_1_BASIC_LENGTH = this.REJOINTYPE_LEN + this.JOINEUI_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
+  
+  //For rejoin request2
+  //
+  //
+  //
+  
   //MIC and encrypt block
   this.BLOCK_CLASS = {
     A: 0x01,
@@ -356,9 +372,16 @@ module.exports = new function () {
   this.BLOCK_LENMSG_OFFSET = this.BLOCK_FCNT_OFFSET + this.FCNT_LEN + 1;
   this.IV_LEN = this.BLOCK_LEN;
 
+   //for join request
   this.BLOCK_LEN_REQ_MIC = this.MHDR_LEN + this.APPEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
 
-  this.BLOCK_LEN_ACPT_BASE = this.APPNONCE_LEN + this.NETID_LEN + this.DEVADDR_LEN + this.DLSETTINGS_LEN + this.RXDELAY_LEN;
+  //for rejoin request 1
+  this.BLOCK_LEN_REJOINREQ_1_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.JOINEUI_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
+
+  //for rejoin request 2
+  //this.BLOCK_LEN_REJOINREQ_2_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.NEIID_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
+  
+  this.BLOCK_LEN_ACPT_BASE = this.JOINNONCE_LEN + this.NETID_LEN + this.DEVADDR_LEN + this.DLSETTINGS_LEN + this.RXDELAY_LEN;
   this.BLOCK_LEN_ACPT_MIC_BASE = this.MHDR_LEN + this.BLOCK_LEN_ACPT_BASE;
 
   this.LENMSG_LEN = 1;
@@ -369,9 +392,9 @@ module.exports = new function () {
   //ants for XCloud
   this.DID_LEN = 22;
   this.PK_LEN = 32; //Product key
-  this.SESSKEYBUF_LEN = 1 + this.APPNONCE_LEN + this.DEVNONCE_LEN + this.NETID_LEN;
-  this.SK_APPNONCE_OFFSET = 1;
-  this.SK_NETID_OFFSET = this.SK_APPNONCE_OFFSET + this.APPNONCE_LEN;
+  this.SESSKEYBUF_LEN = 1 + this.JOINNONCE_LEN + this.DEVNONCE_LEN + this.NETID_LEN;
+  this.SK_JOINNONCE_OFFSET = 1;
+  this.SK_NETID_OFFSET = this.SK_JOINNONCE_OFFSET + this.JOINNONCE_LEN;
   this.SK_DEVNONCE_OFFSET = this.SK_NETID_OFFSET + this.NETID_LEN;
 
   //Default RxDelay for RX1 is 1 sec.
