@@ -7,10 +7,13 @@ module.exports = new function () {
   this.DEVADDR_LEN = 4;
   this.GATEWAYID_LEN = 8;
   this.APPKEY_LEN = 16;
+  this.NWKKEY_LEN = 16;
   this.DEVNONCE_LEN = 2;
   this.APPNONCE_LEN = 3;
   this.JOINNONCE_LEN = 3;
-  this.JOINREQ_BASIC_LENGTH = this.APPEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
+  this.RJCOUNT0 = 2;
+  this.RJCOUNT1 = 2;
+  this.JOINREQ_BASIC_LENGTH = this.JOINEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
   this.NETID_LEN = 3;
   this.NWKID_LEN = 1;
   this.NWKID_OFFSET = 2;
@@ -25,8 +28,12 @@ module.exports = new function () {
   this.RXDELAY_BITOFFSET = 0;
   this.RXDELAY_BITLEN = 4;
   this.RXDELAY_LEN = 1;
-
-  this.NWKSKEY_LEN = 16;
+  //this.NWKSKEY_LEN = 16;
+  this.JSINTKEY_LEN = 16;
+  this.JSENCKEY_LEN = 16;
+  this.SNWKSINTKEY_LEN = 16;
+  this.FNWKSINTKEY_LEN = 16;
+  this.NWKSENCKEY_LEN = 16;
   this.APPSKEY_LEN = 16;
   this.DIRECTION_LEN = 1;
   this.ACTIVATION_MODE = [
@@ -36,11 +43,16 @@ module.exports = new function () {
   this.BUF_LIST = [
     'JoinEUI',
     'DevEUI',
+    'NwkKey',
     'AppKey',
     'JoinNonce',
     'DevNonce',
+    'JSIntKey',
+    'JSEncKey',
+    'SNwkSIntKey',
+    'FNwkSIntKey',
+    'NwkSEncKey',
     'AppSKey',
-    'NwkSKey',
     'DevAddr',
     'NetID',
     'NwkID',
@@ -328,7 +340,6 @@ module.exports = new function () {
   this.ADR_LEN = 1;
   this.FC_ADRACKREQ_OFFSET = this.FC_ACK_OFFSET + this.ACK_LEN;
   this.ADRACKREQ_LEN = 1;
-
   this.FPORT_LEN = 1;
 
   this.MIN_MACPAYLOAD_LEN = this.FHDR_LEN_BASE;
@@ -345,13 +356,14 @@ module.exports = new function () {
   this.REJOINTYPE_LEN = 1;
   this.REJOINEUI_OFFSET = this.REJOINTYPE_OFFSET + this.REJOINTYPE_LEN;
   this.REJOINDEVEUI_OFFSET = this.REJOINEUI_OFFSET + this.JOINEUI_LEN;
-  this.RJCOUNT0_OFFSET = this.REJOINDEVEUI_OFFSET + this.RJCOUNT0_LEN;
-  this.REJOINREQ_1_BASIC_LENGTH = this.REJOINTYPE_LEN + this.JOINEUI_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
+  this.RJCOUNT1_OFFSET = this.REJOINDEVEUI_OFFSET + this.DEVEUI_LEN;
+  this.REJOINREQ_1_BASIC_LENGTH = this.REJOINTYPE_LEN + this.JOINEUI_LEN + this.DEVEUI_LEN + this.RJCOUNT1_LEN;
   
   //For rejoin request2
-  //
-  //
-  //
+  this.REJOINNETID_OFFSET = this.REJOINTYPE_OFFSET + this.REJOINTYPE_LEN;
+  this.REJOINDEVEUI_0_OFFSET = this.REJOINNETID_OFFSET + this.NETID_LEN;
+  this.RJCOUNT0_OFFSET = this.REJOINDEVEUI_0_OFFSET + this.DEVEUI_LEN;
+  this.REJOINREQ_0_BASIC_LENGTH = this.REJOINTYPE_LEN + this.NETID_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
   
   //MIC and encrypt block
   this.BLOCK_CLASS = {
@@ -376,10 +388,10 @@ module.exports = new function () {
   this.BLOCK_LEN_REQ_MIC = this.MHDR_LEN + this.APPEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
 
   //for rejoin request 1
-  this.BLOCK_LEN_REJOINREQ_1_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.JOINEUI_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
+  this.BLOCK_LEN_REJOINREQ_1_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.JOINEUI_LEN + this.DEVEUI_LEN + this.RJCOUNT1_LEN;
 
-  //for rejoin request 2
-  //this.BLOCK_LEN_REJOINREQ_2_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.NEIID_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
+  //for rejoin request 0 & 2
+  this.BLOCK_LEN_REJOINREQ_0_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.NEIID_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
   
   this.BLOCK_LEN_ACPT_BASE = this.JOINNONCE_LEN + this.NETID_LEN + this.DEVADDR_LEN + this.DLSETTINGS_LEN + this.RXDELAY_LEN;
   this.BLOCK_LEN_ACPT_MIC_BASE = this.MHDR_LEN + this.BLOCK_LEN_ACPT_BASE;
@@ -392,10 +404,10 @@ module.exports = new function () {
   //ants for XCloud
   this.DID_LEN = 22;
   this.PK_LEN = 32; //Product key
-  this.SESSKEYBUF_LEN = 1 + this.JOINNONCE_LEN + this.DEVNONCE_LEN + this.NETID_LEN;
+  this.SESSKEYBUF_LEN = 1 + this.JOINNONCE_LEN + this.DEVNONCE_LEN + this.JOINEUI_LEN;
   this.SK_JOINNONCE_OFFSET = 1;
-  this.SK_NETID_OFFSET = this.SK_JOINNONCE_OFFSET + this.JOINNONCE_LEN;
-  this.SK_DEVNONCE_OFFSET = this.SK_NETID_OFFSET + this.NETID_LEN;
+  this.SK_JOINEUI_OFFSET = this.SK_JOINNONCE_OFFSET + this.JOINNONCE_LEN;
+  this.SK_DEVNONCE_OFFSET = this.SK_JOINEUI_OFFSET + this.JOINEUI_LEN;
 
   //Default RxDelay for RX1 is 1 sec.
   this.DEFAULT_RXDELAY = Buffer.alloc(this.RXDELAY_LEN);
