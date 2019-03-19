@@ -13,6 +13,12 @@ module.exports = new function () {
   this.JOINNONCE_LEN = 3;
   this.RJCOUNT0 = 2;
   this.RJCOUNT1 = 2;
+  
+  this.JoinType = Buffer.from('ff','hex');
+  this.RejoinType_0 = Buffer.from('00','hex');
+  this.RejoinType_1 = Buffer.from('01','hex');
+  this.RejoinType_2 = Buffer.from('02','hex');
+  
   this.JOINREQ_BASIC_LENGTH = this.JOINEUI_LEN + this.DEVEUI_LEN + this.DEVNONCE_LEN;
   this.NETID_LEN = 3;
   this.NWKID_LEN = 1;
@@ -394,7 +400,7 @@ module.exports = new function () {
   this.BLOCK_LEN_REJOINREQ_0_MIC = this.MHDR_LEN + this.REJOINTYPE_LEN + this.NEIID_LEN + this.DEVEUI_LEN + this.RJCOUNT0_LEN;
   
   this.BLOCK_LEN_ACPT_BASE = this.JOINNONCE_LEN + this.NETID_LEN + this.DEVADDR_LEN + this.DLSETTINGS_LEN + this.RXDELAY_LEN;
-  this.BLOCK_LEN_ACPT_MIC_BASE = this.MHDR_LEN + this.BLOCK_LEN_ACPT_BASE;
+  this.BLOCK_LEN_ACPT_MIC_BASE = 1 + this.JOINEUI_LEN + this.DEVNONCE_LEN + this.MHDR_LEN + this.BLOCK_LEN_ACPT_BASE;
 
   this.LENMSG_LEN = 1;
 
