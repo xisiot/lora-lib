@@ -14,24 +14,48 @@ const deviceInfoDef = function (sequelize) {
       allowNull: true,
       unique: true,
     },
+    NwkKey: {
+      type: Sequelize.CHAR(consts.NWKKEY_LEN * 2),
+      allowNull: true,
+    },
     AppKey: {
       type: Sequelize.CHAR(consts.APPKEY_LEN * 2),
       allowNull: true,
     },
-    AppEUI: {
-      type: Sequelize.CHAR(consts.APPEUI_LEN * 2),
+    JoinEUI: {
+      type: Sequelize.CHAR(consts.JOINEUI_LEN * 2),
       allowNull: false,
     },
     DevNonce: {
       type: Sequelize.CHAR(consts.DEVNONCE_LEN * 2),
       allowNull: true,
     },
-    AppNonce: {
-      type: Sequelize.CHAR(consts.APPNONCE_LEN * 2),
+    JoinNonce: {
+      type: Sequelize.CHAR(consts.JOINNONCE_LEN * 2),
       allowNull: true,
     },
-    NwkSKey: {
-      type: Sequelize.CHAR(consts.NWKSKEY_LEN * 2),
+    JoinReqType: {
+      type: Sequelize.CHAR(2),
+      allowNull: true,
+    },
+    JSIntKey:{
+      type: Sequelize.CHAR(consts.JSINTKEY_LEN * 2),
+      allowNull: true,
+    },
+    JSEncKey:{
+      type: Sequelize.CHAR(consts.JSENCKEY_LEN * 2),
+      allowNull: true,
+    },
+    SNwkSIntKey: {
+      type: Sequelize.CHAR(consts.SNWKSINTKEY_LEN* 2),
+      allowNull: true,
+    },
+    FNwkSIntKey: {
+      type: Sequelize.CHAR(consts.FNWKSINTKEY_LEN* 2),
+      allowNull: true,
+    },
+    NwkSEncKey: {
+      type: Sequelize.CHAR(consts.FNWKSINTKEY_LEN* 2),
       allowNull: true,
     },
     AppSKey: {
