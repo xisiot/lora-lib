@@ -6,8 +6,8 @@ const Crud = require('./Crud');
 
 const appInfoDef = function (sequelize) {
   return sequelize.define('AppInfo', {
-    AppEUI: {
-      type: Sequelize.CHAR(consts.APPEUI_LEN * 2),
+    JoinEUI: {
+      type: Sequelize.CHAR(consts.JoinEUI_LEN * 2),
       primaryKey: true,
       allowNull: false,
     },
