@@ -402,7 +402,7 @@ module.exports = new function () {
   this.BLOCK_LEN_ACPT_BASE = this.JOINNONCE_LEN + this.NETID_LEN + this.DEVADDR_LEN + this.DLSETTINGS_LEN + this.RXDELAY_LEN;
   this.BLOCK_LEN_ACPT_MIC_BASE =  1 + this.JOINEUI_LEN + this.DEVNONCE_LEN + this.MHDR_LEN + this.BLOCK_LEN_ACPT_BASE;
   this.BLOCK_LEN_ACPT_MIC_102_BASE = this.MHDR_LEN + this.BLOCK_LEN_ACPT_BASE;
-  
+
   this.LENMSG_LEN = 1;
 
   this.V102_CMAC_LEN = 4;
@@ -757,9 +757,14 @@ module.exports = new function () {
 
   //Cache attributes
   this.DEVICEINFO_CACHE_ATTRIBUTES = [
+    'NwkKey',
     'AppKey',
-    'AppEUI',
-    'NwkSKey',
+    'JoinEUI',
+    'JSIntKey',
+    'JSEncKey',
+    'SNwkSIntKey',
+    'FNwkSIntKey',
+    'NwkSEncKey',
     'AppSKey',
     'FCntUp',
     'NFCntDown',
