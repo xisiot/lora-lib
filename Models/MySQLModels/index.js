@@ -7,6 +7,7 @@ const DeviceRouting = require('./DeviceRouting.js');
 const DeviceStatus = require('./DeviceStatus.js');
 const GatewayInfo = require('./GatewayInfo.js');
 const GatewayStatus = require('./GatewayStatus.js');
+const App2PB = require('./App2PB.js');
 
 module.exports = {
   AppInfo,
@@ -17,4 +18,5 @@ module.exports = {
   DeviceStatus,
   GatewayInfo,
   GatewayStatus,
+  App2PB,
 };

@@ -17,10 +17,15 @@ const deviceInfoDef = function (sequelize) {
     AppKey: {
       type: Sequelize.CHAR(consts.APPKEY_LEN * 2),
       allowNull: true,
+      defaultValue: '',//有问题
     },
     AppEUI: {
       type: Sequelize.CHAR(consts.APPEUI_LEN * 2),
       allowNull: false,
+    },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     DevNonce: {
       type: Sequelize.CHAR(consts.DEVNONCE_LEN * 2),
@@ -62,6 +67,10 @@ const deviceInfoDef = function (sequelize) {
       type: Sequelize.INTEGER,
       defaultValue: 0,
       allowNull: false,
+    },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
   });
 };

@@ -23,6 +23,51 @@ const Crud = {
       .then(handleDatabaseRes);
   },
 
+  readItems: function (query, fields, from, size) {
+    query = utils.objBuf2Hex(query);
+    from = parseInt(from);
+    size = parseInt(size);
+    let whereOpts = {};
+    let offset = 0;
+    if (!from && !size) {
+      whereOpts = {
+        where: query,
+        order: [['updatedAt', 'DESC']],
+      };
+    } else {
+      if (!from) {
+        from = 1;
+      } else if (!size) {
+        size = 10;
+      }
+      offset = (from - 1) * size;
+      whereOpts = {
+        where: query,
+        offset: offset,
+        limit: size,
+        order: [['updatedAt', 'DESC']],
+      };
+    }
+
+    if (fields && (Object.keys(fields).length > 0)) {
+      whereOpts.attributes = fields;
+    }
+
+    return this._model
+      .findAndCountAll(whereOpts)
+      .then(res => {
+        if (size) {
+          res.pagecount = res.count % size === 0 ? parseInt(res.count / size) : parseInt(res.count / size) + 1;
+        } else if (from) {
+          res.pagecount = res.count % 10 === 0 ? parseInt(res.count / 10) : parseInt(res.count / 10) + 1;
+        } else {
+          res.pagecount = 1;
+        }
+        return res;
+      });
+    // .then(handleDatabaseRes);
+  },
+
   createItem: function (values) {
     values = utils.objBuf2Hex(values);
     return this._model.create(values);

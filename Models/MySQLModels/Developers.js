@@ -55,4 +55,3 @@ Developers.prototype = Object.create(Crud);
 Developers.prototype.constructor = Developers;
 
 module.exports = Developers;
-

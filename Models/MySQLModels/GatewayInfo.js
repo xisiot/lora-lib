@@ -13,6 +13,10 @@ const gatewayInfoDef = function (sequelize) {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     frequencyPlan: {
       type: Sequelize.STRING,
       allowNull: true,
@@ -31,6 +35,10 @@ const gatewayInfoDef = function (sequelize) {
       allowNull: true,
     },
     model: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    description: {
       type: Sequelize.STRING,
       allowNull: true,
     },

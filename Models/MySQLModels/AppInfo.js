@@ -18,6 +18,10 @@ const appInfoDef = function (sequelize) {
     name: {
       type: Sequelize.STRING,
     },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    }
   });
 };
 
@@ -28,4 +32,5 @@ function AppInfo(sequelize) {
 AppInfo.prototype = Object.create(Crud);
 AppInfo.prototype.constructor = AppInfo;
 
+module.exports = AppInfo;
 module.exports = AppInfo;
