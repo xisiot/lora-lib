@@ -17,10 +17,6 @@ const app2devType = function(sequelize) {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    msg: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
   });
 };
 
