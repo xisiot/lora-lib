@@ -20,6 +20,10 @@ const code = {
       code: 2105,
       message: 'invalid AppKey',
     },
+    gatewayId: {
+      code: 2106,
+      message: 'invalid gatewayId',
+    },
     DevAddr: {
       code: 2107,
       message: 'invalid DevAddr',
@@ -31,10 +35,6 @@ const code = {
     Downlink: {
       code: 2109,
       message: 'invalid Downlink',
-    },
-    gatewayId: {
-      code: 2110,
-      message: 'invalid gatewayId',
     },
     userID: {
       code: 2111,
