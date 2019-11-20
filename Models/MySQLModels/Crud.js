@@ -20,7 +20,7 @@ const Crud = {
 
     return this._model
       .findOne(whereOpts)
-      .then(handleDatabaseRes);
+//      .then(handleDatabaseRes);
   },
 
   readItems: function (query, fields, from, size) {
